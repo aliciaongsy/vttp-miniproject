@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;500&family=Montserrat&family=Open+Sans&family=Rubik+Bubbles&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="/rec.css">
+    <title>Recommendation</title>
+</head>
+
+<body>
+    <div class="p-2 md-2 mt-1 mb-1 custom" style="background-color: whitesmoke">
+        <ul class="nav justify-content-center">
+            <li class="navbar-brand" id="logo">
+                SHOWGLOBE
+            </li>
+        </ul>
+        <form class="d-flex" method="get" data-th-action="@{/result}">
+            <input class="form-control me-2" type="search" placeholder="Quick Search" name="show">
+            <button class="btn btn-outline-dark btn-sm" type="submit"><i
+                    class="fa-solid fa-magnifying-glass"></i></button>
+        </form>
+        <ul class="nav justify-content-end">
+            <li class="nav-item active" id="navbar">
+                <a class="nav-link" data-th-href="@{/home}" style="color: black;">Home</a>
+            </li>
+            <li class="nav-item" id="navbar">
+                <a class="nav-link" data-th-href="@{/recommendation}" style="color: black;">Recommendations</a>
+            </li>
+            <li class="nav-item" aria-current="page">
+                <a data-th-if="${#strings.isEmpty(id)}" class="nav-link" data-th-href="@{/login}"
+                    style="color: black;">Favourites</a>
+                <a data-th-unless="${#strings.isEmpty(id)}" class="nav-link"
+                    data-th-href="@{/{id}/favourites(id=${id})}" style="color: black;">Favourites</a>
+            </li>
+            <li data-th-unless="${loggedin}" class="nav-item">
+                <a class="nav-link" data-th-href="@{/login}" style="color: black;">Login</a>
+            </li>
+            <li data-th-if="${loggedin}" class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
+                    aria-expanded="false" style="color: black;"><i class="fa-regular fa-circle-user"></i> <span
+                        data-th-text="${username}"></span></a>
+                <ul class="dropdown-menu dropdown-menu-dark">
+                    <li><a class="dropdown-item" data-th-href="@{/signout}">Sign out</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <section class="pt-5 pb-5">
+        <div class="container" id="slider">
+            <!-- classics -->
+            <div class="row" id="row">
+                <div class="col-9">
+                    <h3 class="mb-3" style="font-weight: bold;">Classics</h3>
+                </div>
+                <div class="col-3 text-right">
+                    <a class="btn btn-light mb-3 mr-1" href="#carouselExampleIndicators2" role="button"
+                        data-slide="prev">
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </a>
+                    <a class="btn btn-light mb-3 " href="#carouselExampleIndicators2" role="button" data-slide="next">
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                </div>
+                <div class="col-12">
+                    <div id="carouselExampleIndicators2" class="carousel" data-interval="false">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <div class="row">
+                                    <div class="card col-lg-4 mb-4" style="text-align: left;">
+                                        <p class="p-2 mt-2">Embark on a timeless journey through cinematic classics -
+                                            where every frame tells a story that transcends eras. </p>
+                                    </div>
+                                    <div class="col-lg-2 mb-4">
+                                        <div class="card">
+                                            <img data-th-src="@{${eternalsunshine.Poster}}">
+                                            <div class="cover">
+                                                <a data-th-href="@{/details/{id}(id=${eternalsunshine.imdbID})}"
+                                                    style="color: whitesmoke; text-decoration: none;">
+                                                    <h6 class="name" data-th-text="${eternalsunshine.Title}"></h6>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 mb-4">
+                                        <div class="card">
+                                            <img data-th-src="@{${diehard.Poster}}">
+                                            <div class="cover">
+                                                <a data-th-href="@{/details/{id}(id=${diehard.imdbID})}"
+                                                    style="color: whitesmoke; text-decoration: none;">
+                                                    <h6 class="name" data-th-text="${diehard.Title}"></h6>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 mb-4">
+                                        <div class="card">
+                                            <img data-th-src="@{${prideprejudice.Poster}}">
+                                            <div class="cover">
+                                                <a data-th-href="@{/details/{id}(id=${prideprejudice.imdbID})}"
+                                                    style="color: whitesmoke; text-decoration: none;">
+                                                    <h6 class="name" data-th-text="${prideprejudice.Title}"></h6>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <div class="row">
+                                    <div class="card col-lg-4 mb-4" style="text-align: left;">
+                                        <p class="p-2 mt-2">Embark on a timeless journey through cinematic classics -
+                                            where every frame
+                                            tells a story that transcends eras. </p>
+                                    </div>
+                                    <div class="col-lg-2 mb-4">
+                                        <div class="card">
+                                            <img data-th-src="@{${homealone.Poster}}">
+                                            <div class="cover">
+                                                <a data-th-href="@{/details/{id}(id=${homealone.imdbID})}"
+                                                    style="color: whitesmoke; text-decoration: none;">
+                                                    <h6 class="name" data-th-text="${homealone.Title}"></h6>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 mb-4">
+                                        <div class="card">
+                                            <img data-th-src="@{${forrest.Poster}}">
+                                            <div class="cover">
+                                                <a data-th-href="@{/details/{id}(id=${forrest.imdbID})}"
+                                                    style="color: whitesmoke; text-decoration: none;">
+                                                    <h6 class="name" data-th-text="${forrest.Title}"></h6>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 mb-4">
+                                        <div class="card">
+                                            <img data-th-src="@{${thenotebook.Poster}}">
+                                            <div class="cover">
+                                                <a data-th-href="@{/details/{id}(id=${thenotebook.imdbID})}"
+                                                    style="color: whitesmoke; text-decoration: none;">
+                                                    <h6 class="name" data-th-text="${thenotebook.Title}"></h6>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <div class="row">
+                                    <div class="card col-lg-4 mb-4" style="text-align: left;">
+                                        <p class="p-2 mt-2">Embark on a timeless journey through cinematic classics -
+                                            where every frame
+                                            tells a story that transcends eras. </p>
+                                    </div>
+                                    <div class="col-lg-2 mb-4">
+                                        <div class="card">
+                                            <img data-th-src="@{${godfather.Poster}}">
+                                            <div class="cover">
+                                                <a data-th-href="@{/details/{id}(id=${godfather.imdbID})}"
+                                                    style="color: whitesmoke; text-decoration: none;">
+                                                    <h6 class="name" data-th-text="${godfather.Title}"></h6>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 mb-4">
+                                        <div class="card">
+                                            <img data-th-src="@{${rocky.Poster}}">
+                                            <div class="cover">
+                                                <a data-th-href="@{/details/{id}(id=${rocky.imdbID})}"
+                                                    style="color: whitesmoke; text-decoration: none;">
+                                                    <h6 class="name" data-th-text="${rocky.Title}"></h6>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 mb-4">
+                                        <div class="card">
+                                            <img data-th-src="@{${beautifulmind.Poster}}">
+                                            <div class="cover">
+                                                <a data-th-href="@{/details/{id}(id=${beautifulmind.imdbID})}"
+                                                    style="color: whitesmoke; text-decoration: none;">
+                                                    <h6 class="name" data-th-text="${beautifulmind.Title}"></h6>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- inspirational -->
+            <div class="row" id="row">
+                <div class="col-9">
+                    <h3 class="mb-3" style="font-weight: bold;">Inspirational</h3>
+                </div>
+                <div class="col-3 text-right">
+                    <a class="btn btn-light mb-3 mr-1" href="#carouselExampleIndicators3" role="button"
+                        data-slide="prev">
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </a>
+                    <a class="btn btn-light mb-3 " href="#carouselExampleIndicators3" role="button" data-slide="next">
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                </div>
+                <div class="col-12">
+                    <div id="carouselExampleIndicators3" class="carousel" data-interval="false">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <div class="row">
+                                    <div class="card col-lg-4 mb-4" style="text-align: left;">
+                                        <p class="p-2 mt-2">These films
+                                            celebrate the indomitable human spirit, offering heartwarming stories of
+                                            personal growth and motivation. </p>
+                                    </div>
+                                    <div class="col-lg-2 mb-4">
+                                        <div class="card">
+                                            <img data-th-src="@{${goodwillhunting.Poster}}">
+                                            <div class="cover">
+                                                <a data-th-href="@{/details/{id}(id=${goodwillhunting.imdbID})}"
+                                                    style="color: whitesmoke; text-decoration: none;">
+                                                    <h6 class="name" data-th-text="${goodwillhunting.Title}"></h6>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 mb-4">
+                                        <div class="card">
+                                            <img data-th-src="@{${blindside.Poster}}">
+                                            <div class="cover">
+                                                <a data-th-href="@{/details/{id}(id=${blindside.imdbID})}"
+                                                    style="color: whitesmoke; text-decoration: none;">
+                                                    <h6 class="name" data-th-text="${blindside.Title}"></h6>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 mb-4">
+                                        <div class="card">
+                                            <img data-th-src="@{${happyness.Poster}}">
+                                            <div class="cover">
+                                                <a data-th-href="@{/details/{id}(id=${happyness.imdbID})}"
+                                                    style="color: whitesmoke; text-decoration: none;">
+                                                    <h6 class="name" data-th-text="${happyness.Title}"></h6>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <div class="row">
+                                    <div class="card col-lg-4 mb-4" style="text-align: left;">
+                                        <p class="p-2 mt-2">These films
+                                            celebrate the indomitable human spirit, offering heartwarming stories of
+                                            personal growth and motivation. </p>
+                                    </div>
+                                    <div class="col-lg-2 mb-4">
+                                        <div class="card">
+                                            <img data-th-src="@{${forrest.Poster}}">
+                                            <div class="cover">
+                                                <a data-th-href="@{/details/{id}(id=${forrest.imdbID})}"
+                                                    style="color: whitesmoke; text-decoration: none;">
+                                                    <h6 class="name" data-th-text="${forrest.Title}"></h6>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 mb-4">
+                                        <div class="card">
+                                            <img data-th-src="@{${godfather.Poster}}">
+                                            <div class="cover">
+                                                <a data-th-href="@{/details/{id}(id=${godfather.imdbID})}"
+                                                    style="color: whitesmoke; text-decoration: none;">
+                                                    <h6 class="name" data-th-text="${godfather.Title}"></h6>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 mb-4">
+                                        <div class="card">
+                                            <img data-th-src="@{${lifeofpi.Poster}}">
+                                            <div class="cover">
+                                                <a data-th-href="@{/details/{id}(id=${lifeofpi.imdbID})}"
+                                                    style="color: whitesmoke; text-decoration: none;">
+                                                    <h6 class="name" data-th-text="${lifeofpi.Title}"></h6>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- disney -->
+            <div class="row" id="row">
+                <div class="col-9">
+                    <h3 class="mb-3" style="font-weight: bold;">Disney</h3>
+                </div>
+                <div class="col-3 text-right">
+                    <a class="btn btn-light mb-3 mr-1" href="#carouselExampleIndicators4" role="button"
+                        data-slide="prev">
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </a>
+                    <a class="btn btn-light mb-3 " href="#carouselExampleIndicators4" role="button" data-slide="next">
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                </div>
+                <div class="col-12">
+                    <div id="carouselExampleIndicators4" class="carousel" data-interval="false">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <div class="row">
+                                    <div class="card col-lg-4 mb-4" style="text-align: left;">
+                                        <p class="p-2 mt-2">Step into the enchanting realm of Disney films, where
+                                            captivating narratives and timeless storytelling seamlessly converge. </p>
+                                    </div>
+                                    <div class="col-lg-2 mb-4">
+                                        <div class="card">
+                                            <img data-th-src="@{${lionking.Poster}}">
+                                            <div class="cover">
+                                                <a data-th-href="@{/details/{id}(id=${lionking.imdbID})}"
+                                                    style="color: whitesmoke; text-decoration: none;">
+                                                    <h6 class="name" data-th-text="${lionking.Title}"></h6>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 mb-4">
+                                        <div class="card">
+                                            <img data-th-src="@{${walle.Poster}}">
+                                            <div class="cover">
+                                                <a data-th-href="@{/details/{id}(id=${walle.imdbID})}"
+                                                    style="color: whitesmoke; text-decoration: none;">
+                                                    <h6 class="name" data-th-text="${walle.Title}"></h6>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 mb-4">
+                                        <div class="card">
+                                            <img data-th-src="@{${up.Poster}}">
+                                            <div class="cover">
+                                                <a data-th-href="@{/details/{id}(id=${up.imdbID})}"
+                                                    style="color: whitesmoke; text-decoration: none;">
+                                                    <h6 class="name" data-th-text="${up.Title}"></h6>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <div class="row">
+                                    <div class="card col-lg-4 mb-4" style="text-align: left;">
+                                        <p class="p-2 mt-2">Step into the enchanting realm of Disney films, where
+                                            captivating narratives and timeless storytelling seamlessly converge. </p>
+                                    </div>
+                                    <div class="col-lg-2 mb-4">
+                                        <div class="card">
+                                            <img data-th-src="@{${ratatouille.Poster}}">
+                                            <div class="cover">
+                                                <a data-th-href="@{/details/{id}(id=${ratatouille.imdbID})}"
+                                                    style="color: whitesmoke; text-decoration: none;">
+                                                    <h6 class="name" data-th-text="${ratatouille.Title}"></h6>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 mb-4">
+                                        <div class="card">
+                                            <img data-th-src="@{${snowwhite.Poster}}">
+                                            <div class="cover">
+                                                <a data-th-href="@{/details/{id}(id=${snowwhite.imdbID})}"
+                                                    style="color: whitesmoke; text-decoration: none;">
+                                                    <h6 class="name" data-th-text="${snowwhite.Title}"></h6>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 mb-4">
+                                        <div class="card">
+                                            <img data-th-src="@{${toystory.Poster}}">
+                                            <div class="cover">
+                                                <a data-th-href="@{/details/{id}(id=${toystory.imdbID})}"
+                                                    style="color: whitesmoke; text-decoration: none;">
+                                                    <h6 class="name" data-th-text="${toystory.Title}"></h6>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js"></script>
+    <script src="https://kit.fontawesome.com/1e9c8e8bf4.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

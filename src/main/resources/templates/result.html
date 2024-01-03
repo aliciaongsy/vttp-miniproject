@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;500&family=Montserrat&family=Open+Sans&family=Rubik+Bubbles&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="/result.css">
+    <title>Search Result</title>
+</head>
+
+<body>
+    <div class="p-2 md-2 mt-1 mb-1 custom" style="background-color: whitesmoke">
+        <ul class="nav justify-content-center">
+            <li class="navbar-brand" id="logo" style="color: black;">
+                SHOWGLOBE
+            </li>
+        </ul>
+        <ul class="nav justify-content-end">
+            <li class="nav-item" id="navbar">
+                <a class="nav-link" data-th-href="@{/home}" style="color: black;">Home</a>
+            </li>
+            <li class="nav-item" id="navbar">
+                <a class="nav-link" data-th-href="@{/recommendation}" style="color: black;">Recommendations</a>
+            </li>
+            <li class="nav-item">
+                <a data-th-if="${#strings.isEmpty(id)}" class="nav-link" data-th-href="@{/login}"
+                    style="color: black;">Favourites</a>
+                <a data-th-unless="${#strings.isEmpty(id)}" class="nav-link"
+                    data-th-href="@{/{id}/favourites(id=${id})}" style="color: black;">Favourites</a>
+            </li>
+            <li data-th-unless="${loggedin}" class="nav-item">
+                <a class="nav-link" data-th-href="@{/login}" style="color: black;">Login</a>
+            </li>
+            <li data-th-if="${loggedin}" class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
+                    aria-expanded="false" style="color: black;"><i class="fa-regular fa-circle-user"></i> <span
+                        data-th-text="${username}"></span></a>
+                <ul class="dropdown-menu dropdown-menu-dark">
+                    <li><a class="dropdown-item" data-th-href="@{/signout}">Sign out</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <a type="hidden" id="top"></a>
+    <div>
+        <div class="p-3 mt-3 container">
+            <dl class="row">
+                <dt class="col-sm-7">
+                    <h2>Search results for "<span data-th-text="${search}"></span>"</h2>
+                </dt>
+                <dd class="col-sm-5" data-th-unless="${loggedin}">
+                    <div class="container d-grid gap-2 d-md-flex justify-content-md-end">
+                        <a data-th-href="@{/login}" role="button" class="btn btn-outline-dark">Login to add
+                            favourites</a>
+                    </div>
+                </dd>
+        </div>
+        <div data-th-if="${movies.empty}">
+            <div class="p-3 container" style="margin-right: 50px;">
+                <h3>No result <i class="fa-regular fa-face-frown"></i></h3>
+                Return back to <a data-th-href="@{/home}">homepage</a>
+            </div>
+        </div>
+        <section data-th-unless="${movies.empty}" id="gallery">
+            <div class="container" id="card-container">
+                <div class="items">
+                    <div class="card item" style="background-color: rgb(35, 35, 35);" data-th-each="movie : ${movies}">
+                        <form method="post" data-th-action="@{/result/favourites}">
+                            <img data-th-unless="${movie.poster}=='N/A'" data-th-src="@{${movie.poster}}" alt=""
+                                class="card-img-top" width="250px">
+                            <img data-th-if="${movie.poster}=='N/A'" id="placeholder" src="movie_placeholder.png"
+                                alt="placeholder" width="282px">
+                            <div class="card-body" style="color: white;">
+                                <h5 class="card-title" data-th-value="${movie.title}" data-th-text="${movie.title}"
+                                    style="font-weight: bold;"></h5>
+                                <ul class="list-unstyled">
+                                    <li class="mb-1">
+                                        <span data-th-value="${movie.year}" data-th-text="${movie.year}"></span>
+                                        /
+                                        <span data-th-value="${movie.type}"
+                                            data-th-text="${#strings.capitalize(movie.type)}"></span>
+                                    </li>
+                                </ul>
+                                <a data-th-href="@{/details/{id}(id=${movie.imdbID})}" role="button"
+                                    class="btn btn-outline-light btn-sm">More details</a>
+                                <input type="hidden" name="favourite"
+                                    data-th-value="${movie.poster + '^' + movie.title + '^' + movie.year + '^' + movie.type + '^' + movie.imdbID}">
+                                <button data-th-if="${loggedin}" type="submit" class="btn btn-outline-danger btn-sm">
+                                    <i class="far fa-heart"></i></button>
+                                <button data-th-unless="${loggedin}" type="submit" class="btn btn-outline-danger btn-sm"
+                                    aria-disabled="true" disabled>
+                                    <i class="far fa-heart"></i></button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div>
+                <ul class="listPage">
+                </ul>
+            </div>
+        </section>
+        <button data-th-unless="${movies.empty}" type="button" id="top" class="btn"><a href="#top" style="color: black;"><i
+                    class="fa-solid fa-arrow-up"></i></a></button>
+
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <script src="https://use.fontawesome.com/releases/v5.8.1/js/all.js"></script>
+    <script src="https://kit.fontawesome.com/1e9c8e8bf4.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.josetxu.com/js/pure-pajinate.es5.min.js"></script>
+    <script src="https://cdn.josetxu.com/js/pure-pajinate.es5.min.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
+</body>
+
+</html>

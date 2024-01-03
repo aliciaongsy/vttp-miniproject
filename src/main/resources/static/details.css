@@ -1,0 +1,140 @@
+body {
+    font-family: "Libre Franklin", sans-serif;
+    background-color: whitesmoke;
+}
+
+.navbar-brand {
+    font-family: "Rubik Bubbles";
+}
+
+.custom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom-style: solid;
+}
+
+#logo {
+    padding: 0 20px;
+}
+
+#navbar li {
+    display: inline-block;
+}
+
+.comment {
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+}
+
+#comment-form {
+    padding: 10px;
+    margin: 10px;
+}
+
+#comments h3 {
+    font-size: 22px;
+    margin: 0;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    margin-left: 10px;
+}
+
+#comments .media {
+    border-top: 1px dashed #DDDDDD;
+    padding: 20px 0;
+    margin: 0;
+}
+
+#comments .media h5 {
+    margin: 0 0 5px;
+    margin-left: 10px;
+}
+
+#comments .media h5 span {
+    font-size: 14px;
+    float: right;
+    color: #999999;
+}
+
+#comments .media p {
+    margin-bottom: 10px;
+    text-align: justify;
+    margin-left: 10px;
+}
+
+#comments .media-detail {
+    margin: 0;
+}
+
+#comments .media-detail li {
+    color: #AAAAAA;
+    font-size: 12px;
+    padding-right: 10px;
+    font-weight: 600;
+}
+
+#comments .media-detail li:last-child {
+    padding-right: 0;
+}
+
+#comments .media-detail li i {
+    color: #666666;
+    font-size: 15px;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+#title h4 {
+    font-family: "Bitter";
+    font-size: 26px;
+    color: #5c4033;
+}
+
+#details {
+    display: flex;
+    flex-direction: row;
+}
+
+#rating {
+    margin-left: auto;
+}
+
+#buttons {
+    margin-left: auto;
+}
+
+.d-flex {
+    margin-left: 250px;
+    height: 32px;
+}
+
+.d-flex input {
+    background-color: whitesmoke;
+    border-color: #2a2a2a;
+    width: 350px;
+}
+
+.d-flex input:focus {
+    background-color: whitesmoke;
+}
+
+#like button:hover i {
+    color: rgb(117, 218, 255);
+}
+
+.name {
+    font-size: 20px;
+    font-weight: bold;
+    margin-left: 10px;
+}
+
+#like .btn {
+    width: 45px;
+}
+
+.nav-item:hover {
+    border-radius: 40px;
+    background-color: #d2c6bf;
+}

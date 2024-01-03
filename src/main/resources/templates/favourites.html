@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;500&family=Montserrat&family=Open+Sans&family=Rubik+Bubbles&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="/favourites.css">
+    <title>Favourites</title>
+</head>
+
+<body>
+    <div class="p-2 md-2 mt-1 mb-1 custom" style="background-color: whitesmoke">
+        <ul class="nav justify-content-center">
+            <li class="navbar-brand" id="logo">
+                SHOWGLOBE
+            </li>
+        </ul>
+        <form class="d-flex" method="get" data-th-action="@{/result}">
+            <input class="form-control me-2" type="search" placeholder="Quick Search" name="show">
+            <button class="btn btn-outline-dark btn-sm" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+        </form>
+        <ul class="nav justify-content-end">
+            <li class="nav-item" id="navbar">
+                <a class="nav-link" data-th-href="@{/home}" style="color: black;">Home</a>
+            </li>
+            <li class="nav-item" id="navbar">
+                <a class="nav-link" data-th-href="@{/recommendation}" style="color: black;">Recommendations</a>
+            </li>
+            <li class="nav-item active" aria-current="page">
+                <a data-th-if="${#strings.isEmpty(id)}" class="nav-link" data-th-href="@{/login}"
+                    style="color: black;">Favourites</a>
+                <a data-th-unless="${#strings.isEmpty(id)}" class="nav-link"
+                    data-th-href="@{/{id}/favourites(id=${id})}" style="color: black;">Favourites</a>
+            </li>
+            <li data-th-unless="${loggedin}" class="nav-item">
+                <a class="nav-link" data-th-href="@{/login}" style="color: black;">Login</a>
+            </li>
+            <li data-th-if="${loggedin}" class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
+                    aria-expanded="false" style="color: black;"><i class="fa-regular fa-circle-user"></i> <span
+                        data-th-text="${username}"></span></a>
+                <ul class="dropdown-menu dropdown-menu-dark">
+                    <li><a class="dropdown-item" data-th-href="@{/signout}">Sign out</a></li>
+                </ul>
+            </li>
+        </ul>
+        </ul>
+    </div>
+    <div class="p-3 mt-3 container">
+        <h1>Favourites</h1>
+    </div>
+    <section data-th-if="${favlist.empty}">
+        <div class="p-3 container">
+            <h3>Favourites list is empty <i class="fa-regular fa-face-frown"></i></h3>
+            Return back to <a data-th-href="@{/search}">homepage</a>
+        </div>
+    </section>
+    <section data-th-unless="${favlist.empty}" id="gallery">
+        
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 mb-4" data-th-each="movie : ${favlist}">
+                    <form method="post" data-th-action="@{/{id}/favourites/remove(id=${id})}">
+                        <div class="card" style="background-color: rgb(35, 35, 35); color: whitesmoke;">
+                            <img data-th-unless="${movie.poster}=='N/A'" data-th-src="@{${movie.poster}}" alt=""
+                                class="card-img-top" width="250px">
+                            <img data-th-if="${movie.poster}=='N/A'" data-th-src="" alt="placeholder">
+                            <div class="card-body">
+                                <h5 class="card-title" data-th-value="${movie.title}" data-th-text="${movie.title}"
+                                    style="font-weight: bold;"></h5>
+                                <ul class="list-unstyled">
+                                    <li class="mb-1">
+                                        <span data-th-value="${movie.year}" data-th-text="${movie.year}"></span> /
+                                        <span data-th-value="${movie.type}"
+                                            data-th-text="${#strings.capitalize(movie.type)}"></span>
+                                    </li>
+                                </ul>
+                                <a data-th-href="@{/details/{id}(id=${movie.imdbID})}" role="button"
+                                    class="btn btn-outline-light btn-sm">More details</a>
+                                <input type="hidden" name="favourite"
+                                    data-th-value="${movie.poster + '^' + movie.title + '^' + movie.year + '^' + movie.type + '^' + movie.imdbID}">
+                                <button type="submit" class="btn btn-outline-danger btn-sm">
+                                    <i class="fa-solid fa-heart-circle-minus"></i></button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/1e9c8e8bf4.js" crossorigin="anonymous"></script>
+</body>
+
+</html>

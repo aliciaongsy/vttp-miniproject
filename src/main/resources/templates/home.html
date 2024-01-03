@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;500&family=Montserrat&family=Open+Sans&family=Rubik+Bubbles&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="load.css">
+    <link rel="stylesheet" href="home.css">
+    <title>Search Movies/Series</title>
+</head>
+
+<body>
+    <div class="p-2 md-2 mt-1 mb-1 custom" style="background-color: whitesmoke">
+        <ul class="nav justify-content-center">
+            <li class="navbar-brand" id="logo">
+                SHOWGLOBE
+            </li>
+        </ul>
+        <ul class="nav justify-content-end">
+            <li class="nav-item active" id="navbar">
+                <a class="nav-link" data-th-href="@{/home}" style="color: black;">Home</a>
+            </li>
+            <li class="nav-item" id="navbar">
+                <a class="nav-link" data-th-href="@{/recommendation}" style="color: black;">Recommendations</a>
+            </li>
+            <li class="nav-item" aria-current="page">
+                <a data-th-if="${#strings.isEmpty(id)}" class="nav-link" data-th-href="@{/login}"
+                    style="color: black;">Favourites</a>
+                <a data-th-unless="${#strings.isEmpty(id)}" class="nav-link"
+                    data-th-href="@{/{id}/favourites(id=${id})}" style="color: black;">Favourites</a>
+            </li>
+            <li data-th-unless="${loggedin}" class="nav-item">
+                <a class="nav-link" data-th-href="@{/login}" style="color: black;">Login</a>
+            </li>
+            <li data-th-if="${loggedin}" class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
+                    aria-expanded="false" style="color: black;"><i class="fa-regular fa-circle-user"></i> <span
+                        data-th-text="${username}"></span></a>
+                <ul class="dropdown-menu dropdown-menu-dark">
+                    <li><a class="dropdown-item" data-th-href="@{/signout}">Sign out</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <form data-th-action="@{/result}" method="post">
+        <div class="p-3 container">
+            <div class="row search-form">
+                <div class="col-lg-3 col-md-3 col-sm-12 p-0">
+                    <select class="form-select" name="type" id="type">
+                        <option value="">Type</option>
+                        <option value="episode">Episode</option>
+                        <option value="movie">Movie</option>
+                        <option value="series">Series</option>
+                    </select>
+                </div>
+                <div class="col-lg-8 col-md-6 col-sm-12 p-0">
+                    <div class="mb-3 form">
+                        <i class="fa fa-search"></i>
+                        <input type="text" name="show" id="show" placeholder="Search Movies, Series, etc"
+                            class="form-control form-input">
+                    </div>
+                </div>
+                <div class="col-lg-1 d-grid gap-2 col-3 mx-auto">
+                    <button type="submit" class="btn btn-outline-dark" formmethod="get">Search</button>
+                </div>
+            </div>
+            <div class="row search-form" data-th-if="${emptysearch}">
+                <div class="col-lg-3 col-md-3 col-sm-12 p-0"></div>
+                <div class="col-lg-8 col-md-6 col-sm-12 p-0">
+                    <div class="msg msg-danger msg-danger-text"> <span class="glyphicon glyphicon-exclamation-sign"><i
+                                class="fa-solid fa-circle-exclamation"></i> </span>
+                        Search field cannot be empty!
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    
+    <div class="loader"></div>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js"></script>
+    <script src="https://kit.fontawesome.com/1e9c8e8bf4.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="load.js"></script>
+    <script src="delay.js"></script>
+</body>
+
+</html>

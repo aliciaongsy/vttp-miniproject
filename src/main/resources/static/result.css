@@ -1,0 +1,111 @@
+body {
+    font-family: "Libre Franklin", sans-serif;
+    background-color: whitesmoke;
+}
+
+h2 {
+    font-family: "Open Sans", sans-serif;
+    font-weight: bold;
+}
+
+ul {
+    color: whitesmoke;
+}
+
+.col-3 {
+    outline-offset: -1px;
+    padding: 20px;
+    margin-left: 55px;
+    margin-right: 55px;
+    margin-bottom: 20px;
+    height: 610px;
+}
+
+.navbar-brand {
+    font-family: "Rubik Bubbles";
+}
+
+.custom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom-style: solid;
+}
+
+#logo {
+    padding: 0 20px;
+}
+
+#navbar li {
+    display: inline-block;
+}
+
+.col-lg-3 {
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+.list-unstyled {
+    font-size: 13px;
+}
+
+.col-sm-7 {
+    padding-left: 25px;
+}
+
+.listPage {
+    padding: 10px;
+    text-align: center;
+    list-style: none;
+}
+
+.listPage li {
+    background-color: black;
+    padding: 10px 15px;
+    border-radius: 10px;
+    display: inline-block;
+    margin: 0 10px;
+    cursor: pointer;
+    text-align: center;
+    size-adjust: auto;
+}
+
+.listPage .active {
+    background-color: #8b6c5c;
+    color: black;
+}
+
+.clearfix::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.card {
+    height: 620px;
+    margin: 20px;
+    float: left;
+    width: calc(25% - 40px);
+}
+
+.items {
+    justify-content: start;
+    align-items: start;
+}
+
+#top {
+    float: right;
+    margin: 20px;
+    border-radius: 50%;
+    background-color: whitesmoke;
+    border-color: whitesmoke;
+}
+
+#top:hover {
+    border-radius: 50%;
+    background-color: lightgray;
+}
+.nav-item:hover{
+    border-radius: 40px;
+    background-color: #d2c6bf;
+}

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bitter:wght@500&family=Libre+Franklin:wght@400;500&family=Montserrat&family=Open+Sans&family=Rubik+Bubbles&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="/details.css">
+    <title>Details</title>
+</head>
+
+<body>
+    <div class="p-2 md-2 mt-1 mb-1 custom" style="background-color: whitesmoke">
+        <ul class="nav justify-content-center">
+            <li class="navbar-brand" id="logo">
+                SHOWGLOBE
+            </li>
+        </ul>
+        <form class="d-flex" method="get" data-th-action="@{/result}">
+            <input class="form-control me-2" type="search" placeholder="Quick Search" name="show">
+            <button class="btn btn-outline-dark btn-sm" type="submit"><i
+                    class="fa-solid fa-magnifying-glass"></i></button>
+        </form>
+        <ul class="nav justify-content-end">
+            <li class="nav-item" id="navbar">
+                <a class="nav-link" data-th-href="@{/home}" style="color: black;">Home</a>
+            </li>
+            <li class="nav-item" id="navbar">
+                <a class="nav-link" data-th-href="@{/recommendation}" style="color: black;">Recommendations</a>
+            </li>
+            <li class="nav-item">
+                <a data-th-if="${#strings.isEmpty(id)}" class="nav-link" data-th-href="@{/login}"
+                    style="color: black;">Favourites</a>
+                <a data-th-unless="${#strings.isEmpty(id)}" class="nav-link"
+                    data-th-href="@{/{id}/favourites(id=${id})}" style="color: black;">Favourites</a>
+            </li>
+            <li data-th-unless="${loggedin}" class="nav-item">
+                <a class="nav-link" data-th-href="@{/login}" style="color: black;">Login</a>
+            </li>
+            <li data-th-if="${loggedin}" class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
+                    aria-expanded="false" style="color: black;"><i class="fa-regular fa-circle-user"></i> <span
+                        data-th-text="${username}"></span></a>
+                <ul class="dropdown-menu dropdown-menu-dark">
+                    <li><a class="dropdown-item" data-th-href="@{/signout}">Sign out</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <div class="mb-3 mt-5 container" data-th-object="${moviedetail}">
+        <form method="post" data-th-action="@{/details/favourites}">
+            <div class="row">
+                <div class="col-md-auto" style="margin-left: 20px;">
+                    <img data-th-src="@{*{Poster}}" alt="movieimage" width="350px">
+                </div>
+                <div class="col col-lg-8">
+                    <ul class="list-unstyled">
+                        <li class="mb-1" id="title">
+                            <h4><span data-th-value="*{Title}" data-th-text="*{Title}"></span> (<span
+                                    data-th-value="*{Year}" data-th-text="*{Year}"></span>)</h4>
+
+                        </li>
+                        <ul class="list-unstyled mb-1" id="details">
+                            <li class="list-inline-item" id="title">
+                                <span data-th-value="*{Rated}" data-th-text="*{Rated}"></span> / <span
+                                    data-th-value="*{Runtime}" data-th-text="*{Runtime}"></span> / <span
+                                    data-th-value="*{Genre}" data-th-text="*{#strings.capitalize(Genre)}"></span>
+                            </li>
+                            <li class="list-inline-item" id="rating">
+                                <i class="fa-solid fa-star" style="color: rgb(255, 213, 0);"></i> <span
+                                    data-th-value="*{imdbRating}" data-th-text="*{imdbRating}"
+                                    style="text-align: center;"></span>
+                            </li>
+                        </ul>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li class="mb-1 mt-3">
+                            SUMMARY <br>
+                            <div class="mt-2">
+                                <span data-th-value="*{Plot}" data-th-text="*{Plot}"></span>
+                            </div>
+                        </li>
+                        <li class="mb-3 mt-3" style="font-style: italic;">
+                            Starring: <span data-th-value="*{Actors}" data-th-text="*{Actors}"
+                                style="font-style: italic;"></span>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li class="mb-2" data-th-if="*{onNetflix}" style="color: crimson;">
+                            Streaming available on Netflix
+                        </li>
+                        <li class="list-inline-item" id="buttons">
+                            <a data-th-href="@{/details/json/{id}(id=*{imdbID})}" role="button"
+                                class="btn btn-outline-dark btn-sm">More ratings</a>
+                            <input type="hidden" name="favourite"
+                                data-th-value="*{Poster + '^' + Title + '^' + Year + '^' + Type + '^' + imdbID}">
+                            <input type="hidden" name="movieid" data-th-value="*{imdbID}">
+                            <button data-th-if="${loggedin}" type="submit" class="btn btn-outline-danger btn-sm">
+                                <i class="far fa-heart"></i></button>
+                            <button data-th-unless="${loggedin}" type="submit" class="btn btn-outline-danger btn-sm"
+                                aria-disabled="true" disabled>
+                                <i class="far fa-heart"></i></button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </form>
+        <!-- comment box -->
+        <div class="comment mt-4">
+            <form id="comment-form" data-th-action="@{/details/comments}" method="post">
+                <input type="hidden" name="movieid" data-th-value="*{imdbID}">
+                <label for="comment" style="margin-bottom: 10px;">New Review: <span data-th-unless="${loggedin}"
+                        style="color: rgb(205, 22, 22);">Login to review</span></label>
+                <textarea data-th-unless="${loggedin}" id="comment" name="comment" class="form-control" required disabled></textarea>
+                <textarea data-th-if="${loggedin}" id="comment" name="comment" class="form-control" required></textarea>
+                <br>
+                <button data-th-if="${loggedin}" type="submit" class="btn btn-outline-dark">Submit</button>
+                <button data-th-unless="${loggedin}" type="submit" class="btn btn-outline-dark" aria-disabled="true"
+                    disabled>Submit</button>
+            </form>
+        </div>
+        <section id="comments" data-th-unless="${#lists.isEmpty(comments)}">
+            <form method="post" data-th-action="@{/details/comments/likes}">
+                <h3><span data-th-text="${#lists.size(comments)}"></span> Reviews:</h3>
+                <!-- Comments will be displayed here -->
+                <div class="media" data-th-each="c: ${comments}">
+                    <div class="name">
+                        <i class="fa-regular fa-face-smile"></i> <span id="name" data-th-text="${c.name}"></span>
+                    </div>
+                    <p data-th-text="${c.comment}"></p>
+                    <ul class="list-unstyled list-inline media-detail pull-left">
+                        <li class="list-inline-item"><i class="fa fa-calendar"></i>
+                            <span data-th-text="${#dates.format(c.date, 'dd-MM-yyyy')}"></span>
+                        </li>
+                        <input type="hidden" name="movieid" data-th-value="*{imdbID}">
+                        <li class="list-inline-item" id="like">
+                            <button type="submit" class="btn"><i class="fa fa-thumbs-up"></i></button>
+                            <span data-th-text="${c.noOfLikes}"></span>
+                        </li>
+                    </ul>
+                </div>
+            </form>
+        </section>
+
+    </div>
+    <script src="https://kit.fontawesome.com/1e9c8e8bf4.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

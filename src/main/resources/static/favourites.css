@@ -1,0 +1,56 @@
+body {
+    font-family: "Libre Franklin", sans-serif;
+    background-color: whitesmoke;
+}
+
+h1 {
+    font-family: "Open Sans", sans-serif;
+    font-weight: bold;
+}
+.navbar-brand {
+    font-family: "Rubik Bubbles";
+}
+
+.custom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom-style: solid;
+}
+
+#logo {
+    padding: 0 20px;
+}
+
+#navbar li {
+    display: inline-block;
+}
+
+.col-lg-3 {
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+.list-unstyled {
+    font-size: 13px;
+}
+.d-flex{
+    margin-left: 240px;
+    height: 32px;
+}
+
+.d-flex input {
+    background-color: whitesmoke;
+    border-color: #2a2a2a;
+    width: 350px;
+}
+.d-flex input:focus{
+    background-color: whitesmoke;
+}
+.p-3 h1 h3 p{
+    padding-left: 25px;
+}
+.nav-item:hover{
+    border-radius: 40px;
+    background-color: #d2c6bf;
+}
